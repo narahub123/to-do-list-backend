@@ -24,10 +24,31 @@ const createMonthlyToDo = async (req, res) => {
 const getAllMonthlyToDos = async (req, res) => {
   const monthlyToDos = await MonthlyToDoModel.find();
 
+  if (!monthlyToDos) {
+    return res.status(404).send("MonthlyToDos Not Found");
+  }
   res.send(monthlyToDos);
+};
+
+const getSingleMonthlyToDo = async (req, res) => {
+  const { _id } = req.params;
+
+  MonthlyToDoModel.findOne({ _id })
+    .then((data) => {
+      if (!data) {
+        return res.status(404).send("MonthlyToDo Not Found");
+      }
+      console.log(data);
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Internal Server Error");
+    });
 };
 
 module.exports = {
   createMonthlyToDo,
   getAllMonthlyToDos,
+  getSingleMonthlyToDo,
 };
