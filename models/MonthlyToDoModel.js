@@ -20,7 +20,13 @@ const monthlyToDoSchema = new mongoose.Schema({
     },
     todos: [
       {
-        type: String,
+        task: {
+          type: String,
+        },
+        completed: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
   },
