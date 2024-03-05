@@ -31,9 +31,9 @@ const getAllMonthlyToDos = async (req, res) => {
 };
 
 const getSingleMonthlyToDo = async (req, res) => {
-  const { _id } = req.params;
+  const { id } = req.params;
 
-  MonthlyToDoModel.findOne({ _id })
+  MonthlyToDoModel.findOne({ id })
     .then((data) => {
       if (!data) {
         return res.status(404).send("MonthlyToDo Not Found");
@@ -49,15 +49,15 @@ const getSingleMonthlyToDo = async (req, res) => {
 
 const updateMonthlyToDo = async (req, res) => {
   const {
-    _id,
+    id,
     data: { column, subject, start, end, todos },
   } = req.body;
 
-  if (!_id) {
+  if (!id) {
     return res.status(400).send("MonthlyToDo Not Found");
   }
 
-  MonthlyToDoModel.findByIdAndUpdate(_id, {
+  MonthlyToDoModel.findByIdAndUpdate(id, {
     data: {
       column,
       subject,
@@ -77,14 +77,14 @@ const updateMonthlyToDo = async (req, res) => {
 };
 
 const deleteMonthlyToDo = async (req, res) => {
-  const { _id } = req.body;
-  console.log(_id);
+  const { id } = req.params;
+  console.log(id);
 
-  if (!_id) {
+  if (!id) {
     return res.status(404).send("MonthlyToDo Not Found");
   }
 
-  MonthlyToDoModel.findByIdAndDelete(_id)
+  MonthlyToDoModel.findByIdAndDelete(id)
     .then((data) => {
       if (!data) {
         return res.status(404).send("MonthlyToDo Not Found");
