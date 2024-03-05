@@ -21,6 +21,13 @@ const createMonthlyToDo = async (req, res) => {
     });
 };
 
+const getAllMonthlyToDos = async (req, res) => {
+  const monthlyToDos = await MonthlyToDoModel.find();
+
+  res.send(monthlyToDos);
+};
+
 module.exports = {
   createMonthlyToDo,
+  getAllMonthlyToDos,
 };
