@@ -47,8 +47,37 @@ const getSingleMonthlyToDo = async (req, res) => {
     });
 };
 
+const updateMonthlyToDo = async (req, res) => {
+  const {
+    _id,
+    data: { subject, start, end, todos },
+  } = req.body;
+
+  if (!_id) {
+    return res.status(400).send("MonthlyToDo Not Found");
+  }
+
+  MonthlyToDoModel.findByIdAndUpdate(_id, {
+    data: {
+      subject,
+      start,
+      end,
+      todos,
+    },
+  })
+    .then((data) => {
+      console.log(data);
+      res.status(200).send("Update Successfully");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Internal Server Error");
+    });
+};
+
 module.exports = {
   createMonthlyToDo,
   getAllMonthlyToDos,
   getSingleMonthlyToDo,
+  updateMonthlyToDo,
 };
