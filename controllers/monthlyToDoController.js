@@ -2,14 +2,14 @@ const MonthlyToDoModel = require("../models/MonthlyToDoModel");
 
 const createMonthlyToDo = async (req, res) => {
   const {
-    data: { subject, start, end, todos },
+    data: { column, subject, start, end, todos },
   } = req.body;
 
-  if (!subject || !start || !end || !Array.isArray(todos)) {
+  if (!column || !subject || !start || !end || !Array.isArray(todos)) {
     return res.status(400).json({ error: "Request body is missing" });
   }
 
-  MonthlyToDoModel.create({ data: { subject, start, end, todos } })
+  MonthlyToDoModel.create({ data: { column, subject, start, end, todos } })
     .then((data) => {
       console.log("Added Successfully...");
       console.log(data);
@@ -50,7 +50,7 @@ const getSingleMonthlyToDo = async (req, res) => {
 const updateMonthlyToDo = async (req, res) => {
   const {
     _id,
-    data: { subject, start, end, todos },
+    data: { column, subject, start, end, todos },
   } = req.body;
 
   if (!_id) {
@@ -59,6 +59,7 @@ const updateMonthlyToDo = async (req, res) => {
 
   MonthlyToDoModel.findByIdAndUpdate(_id, {
     data: {
+      column,
       subject,
       start,
       end,

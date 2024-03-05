@@ -6,6 +6,10 @@ const monthlyToDoSchema = new mongoose.Schema({
     default: "user1",
   },
   data: {
+    column: {
+      type: Number,
+      required: true,
+    },
     subject: {
       type: String,
       required: true,
