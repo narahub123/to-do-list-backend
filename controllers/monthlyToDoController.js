@@ -75,9 +75,32 @@ const updateMonthlyToDo = async (req, res) => {
     });
 };
 
+const deleteMonthlyToDo = async (req, res) => {
+  const { _id } = req.body;
+  console.log(_id);
+
+  if (!_id) {
+    return res.status(404).send("MonthlyToDo Not Found");
+  }
+
+  MonthlyToDoModel.findByIdAndDelete(_id)
+    .then((data) => {
+      if (!data) {
+        return res.status(404).send("MonthlyToDo Not Found");
+      }
+      console.log(data);
+      res.status(200).send("Delete Successfully...");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Internal Server Error");
+    });
+};
+
 module.exports = {
   createMonthlyToDo,
   getAllMonthlyToDos,
   getSingleMonthlyToDo,
   updateMonthlyToDo,
+  deleteMonthlyToDo,
 };
