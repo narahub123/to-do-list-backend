@@ -32,8 +32,8 @@ const getAllMonthlyToDos = async (req, res) => {
 
 const getSingleMonthlyToDo = async (req, res) => {
   const { id } = req.params;
-
-  MonthlyToDoModel.findOne({ id })
+  console.log(id);
+  MonthlyToDoModel.findOne({ _id: id })
     .then((data) => {
       if (!data) {
         return res.status(404).send("MonthlyToDo Not Found");
@@ -69,7 +69,7 @@ const updateMonthlyToDo = async (req, res) => {
     },
     next,
   };
-  
+
   MonthlyToDoModel.findByIdAndUpdate(id, updatedData, { new: true })
     .then((data) => {
       console.log(data);
