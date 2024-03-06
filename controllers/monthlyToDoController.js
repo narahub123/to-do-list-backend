@@ -48,26 +48,35 @@ const getSingleMonthlyToDo = async (req, res) => {
 };
 
 const updateMonthlyToDo = async (req, res) => {
-  const {
-    id,
-    data: { column, subject, start, end, todos },
-  } = req.body;
-
+  const { id } = req.params;
+  // console.log(id);
   if (!id) {
     return res.status(400).send("MonthlyToDo Not Found");
   }
+  const { column, subject, start, end, todos } = req.body;
+  // console.log(column, subject, start, end, todos);
+  if (!column || !subject || !start || !end || !Array.isArray(todos)) {
+    return res.status(400).json({ error: "Request body is missing" });
+  }
 
-  MonthlyToDoModel.findByIdAndUpdate(id, {
-    data: {
-      column,
-      subject,
-      start,
-      end,
-      todos,
+  MonthlyToDoModel.findByIdAndUpdate(
+    id,
+    {
+      data: {
+        column,
+        subject,
+        start,
+        end,
+        todos,
+      },
     },
-  })
+    { new: true }
+  )
     .then((data) => {
       console.log(data);
+      if (!data) {
+        return data.status(404).send("MonthlyToDo not found");
+      }
       res.status(200).send("Update Successfully");
     })
     .catch((err) => {
