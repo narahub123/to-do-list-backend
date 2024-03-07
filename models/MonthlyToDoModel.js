@@ -34,9 +34,9 @@ const monthlyToDoSchema = new mongoose.Schema({
       },
     ],
   },
-  next: {
-    type: String,
-    default: null,
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

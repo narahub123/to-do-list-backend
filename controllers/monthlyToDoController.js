@@ -22,7 +22,7 @@ const createMonthlyToDo = async (req, res) => {
 };
 
 const getAllMonthlyToDos = async (req, res) => {
-  const monthlyToDos = await MonthlyToDoModel.find();
+  const monthlyToDos = await MonthlyToDoModel.find().sort("createdAt");
 
   if (!monthlyToDos) {
     return res.status(404).send("MonthlyToDos Not Found");
@@ -53,8 +53,8 @@ const updateMonthlyToDo = async (req, res) => {
   if (!id) {
     return res.status(400).send("MonthlyToDo Not Found");
   }
-  const { column, subject, start, end, todos, next } = req.body;
-  // console.log(column, subject, start, end, todos);
+  const { column, subject, start, end, todos, createdAt } = req.body;
+  console.log(column, subject, start, end, todos);
   if (!column || !subject || !start || !end || !Array.isArray(todos)) {
     return res.status(400).json({ error: "Request body is missing" });
   }
@@ -67,7 +67,7 @@ const updateMonthlyToDo = async (req, res) => {
       end,
       todos,
     },
-    next,
+    createdAt,
   };
 
   MonthlyToDoModel.findByIdAndUpdate(id, updatedData, { new: true })
